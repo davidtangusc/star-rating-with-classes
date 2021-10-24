@@ -23,21 +23,19 @@ export default class App extends React.Component {
           onClick={(rating) => {
             this.setState({ rating });
           }}
-          renderEmptyStar={(onClick) => {
+        >
+          {(onClick, isFilled) => {
             return (
               <button type="button" className="btn btn-link" onClick={onClick}>
-                <FontAwesomeIcon icon={faStar} color="#bbb" size={size} />
+                <FontAwesomeIcon
+                  icon={faStar}
+                  color={isFilled ? "yellow" : "#bbb"}
+                  size={size}
+                />
               </button>
             );
           }}
-          renderFilledStar={(onClick) => {
-            return (
-              <button type="button" className="btn btn-link" onClick={onClick}>
-                <FontAwesomeIcon icon={faStar} color="yellow" size={size} />
-              </button>
-            );
-          }}
-        />
+        </StarRating>
       </div>
     );
   }

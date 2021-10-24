@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 export default class StarRating extends React.Component {
   render() {
     const stars = [];
-    const { renderEmptyStar, renderFilledStar } = this.props;
 
     for (let i = 1; i <= 5; i++) {
       stars.push(
@@ -13,8 +12,7 @@ export default class StarRating extends React.Component {
           starRatingValue={this.props.value}
           key={i}
           onClick={this.props.onClick}
-          renderEmptyStar={renderEmptyStar}
-          renderFilledStar={renderFilledStar}
+          renderStar={this.props.children}
         />
       );
     }
@@ -26,8 +24,7 @@ export default class StarRating extends React.Component {
 StarRating.propTypes = {
   value: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
-  renderEmptyStar: PropTypes.func.isRequired,
-  renderFilledStar: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired,
 };
 
 class Star extends React.Component {
@@ -47,12 +44,8 @@ class Star extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        {this.props.starValue <= this.props.starRatingValue
-          ? this.props.renderFilledStar(this.handleClick)
-          : this.props.renderEmptyStar(this.handleClick)}
-      </>
-    );
+    const isFilled = this.props.starValue <= this.props.starRatingValue;
+
+    return this.props.renderStar(this.handleClick, isFilled);
   }
 }
