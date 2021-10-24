@@ -1,15 +1,9 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export default class StarRating extends React.Component {
   render() {
     const stars = [];
-    const {
-      emptyColor = "#bbb",
-      filledColor = "yellow",
-      size = "3x",
-    } = this.props;
+    const { renderEmptyStar, renderFilledStar } = this.props;
 
     for (let i = 1; i <= 5; i++) {
       stars.push(
@@ -18,9 +12,8 @@ export default class StarRating extends React.Component {
           starRatingValue={this.props.value}
           key={i}
           onClick={this.props.onClick}
-          emptyColor={emptyColor}
-          filledColor={filledColor}
-          size={size}
+          renderEmptyStar={renderEmptyStar}
+          renderFilledStar={renderFilledStar}
         />
       );
     }
@@ -30,30 +23,28 @@ export default class StarRating extends React.Component {
 }
 
 class Star extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const clickedStarValue =
+      this.props.starValue === this.props.starRatingValue
+        ? 0
+        : this.props.starValue;
+
+    this.props.onClick(clickedStarValue);
+  }
+
   render() {
     return (
-      <button
-        type="button"
-        className="btn btn-link"
-        onClick={() => {
-          const clickedStarValue =
-            this.props.starValue === this.props.starRatingValue
-              ? 0
-              : this.props.starValue;
-
-          this.props.onClick(clickedStarValue);
-        }}
-      >
-        <FontAwesomeIcon
-          icon={faStar}
-          color={
-            this.props.starValue <= this.props.starRatingValue
-              ? this.props.filledColor
-              : this.props.emptyColor
-          }
-          size={this.props.size}
-        />
-      </button>
+      <>
+        {this.props.starValue <= this.props.starRatingValue
+          ? this.props.renderFilledStar(this.handleClick)
+          : this.props.renderEmptyStar(this.handleClick)}
+      </>
     );
   }
 }

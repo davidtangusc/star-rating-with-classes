@@ -1,6 +1,8 @@
 import React from "react";
 import StarRating from "./StarRating";
 import "bootstrap/dist/css/bootstrap.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export default class App extends React.Component {
   constructor() {
@@ -12,13 +14,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    let filledColor = "green";
-
-    if (this.state.rating === 3) {
-      filledColor = "orange";
-    } else if (this.state.rating < 3) {
-      filledColor = "red";
-    }
+    const size = "3x";
 
     return (
       <div className="App">
@@ -27,9 +23,20 @@ export default class App extends React.Component {
           onClick={(rating) => {
             this.setState({ rating });
           }}
-          emptyColor="#ccc"
-          filledColor={filledColor}
-          size="3x"
+          renderEmptyStar={(onClick) => {
+            return (
+              <button type="button" className="btn btn-link" onClick={onClick}>
+                <FontAwesomeIcon icon={faStar} color="#bbb" size={size} />
+              </button>
+            );
+          }}
+          renderFilledStar={(onClick) => {
+            return (
+              <button type="button" className="btn btn-link" onClick={onClick}>
+                <FontAwesomeIcon icon={faStar} color="yellow" size={size} />
+              </button>
+            );
+          }}
         />
       </div>
     );
