@@ -5,6 +5,11 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 export default class StarRating extends React.Component {
   render() {
     const stars = [];
+    const {
+      emptyColor = "#bbb",
+      filledColor = "yellow",
+      size = "3x",
+    } = this.props;
 
     for (let i = 1; i <= 5; i++) {
       stars.push(
@@ -13,6 +18,9 @@ export default class StarRating extends React.Component {
           starRatingValue={this.props.value}
           key={i}
           onClick={this.props.onClick}
+          emptyColor={emptyColor}
+          filledColor={filledColor}
+          size={size}
         />
       );
     }
@@ -23,10 +31,6 @@ export default class StarRating extends React.Component {
 
 class Star extends React.Component {
   render() {
-    const emptyColor = "#ddd";
-    const filledColor = "yellow";
-    const size = "3x";
-
     return (
       <button
         type="button"
@@ -44,10 +48,10 @@ class Star extends React.Component {
           icon={faStar}
           color={
             this.props.starValue <= this.props.starRatingValue
-              ? filledColor
-              : emptyColor
+              ? this.props.filledColor
+              : this.props.emptyColor
           }
-          size={size}
+          size={this.props.size}
         />
       </button>
     );

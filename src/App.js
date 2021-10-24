@@ -12,6 +12,14 @@ export default class App extends React.Component {
   }
 
   render() {
+    let filledColor = "green";
+
+    if (this.state.rating === 3) {
+      filledColor = "orange";
+    } else if (this.state.rating < 3) {
+      filledColor = "red";
+    }
+
     return (
       <div className="App">
         <StarRating
@@ -19,6 +27,9 @@ export default class App extends React.Component {
           onClick={(rating) => {
             this.setState({ rating });
           }}
+          emptyColor="#ccc"
+          filledColor={filledColor}
+          size="3x"
         />
       </div>
     );
