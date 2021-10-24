@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default class StarRating extends React.Component {
   render() {
@@ -21,6 +22,13 @@ export default class StarRating extends React.Component {
     return <>{stars}</>;
   }
 }
+
+StarRating.propTypes = {
+  value: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+  renderEmptyStar: PropTypes.func.isRequired,
+  renderFilledStar: PropTypes.func.isRequired,
+};
 
 class Star extends React.Component {
   constructor(props) {
